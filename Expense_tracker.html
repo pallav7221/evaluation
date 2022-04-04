@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #head{
+            text-align: center;
+        }
+       .fromclass{
+           padding: 12px;
+           width: 30%;
+           margin: auto;
+           /* text-align: center; */
+       }
+        label{
+            display:flex;
+        }
+        input{
+            display: flex;
+        }
+        #container{
+
+            margin: auto;
+            width: 80%;
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            background-color: bisque;
+            gap : 20px;
+        }
+        #expense{
+            margin: 0px 0px 5px 0px;
+        }
+        #container>div{
+
+            background-color: rgb(81, 139, 225);
+            text-align: center;
+            /* display: grid; */
+            /* grid-template-columns: repeat(4,1fr); */
+            /* gap: 15px; */
+        }
+        #month{
+            width: 170px;
+        }
+    </style>
+</head>
+<body>
+    <div id="head">
+        <H1>EXPENSE TRACKER</H1>
+    </div>
+    <div class="fromclass">
+        <form id="form">
+            <label for="Month">Select Month</label>
+            <select name="" id="month" placeholder="month">
+                <option value="janurary">Jan</option>
+                <option value="janurary">Feb</option>
+                <option value="janurary">March</option>
+                <option value="janurary">April</option>
+                <option value="janurary">May</option>
+                <option value="janurary">June</option>
+                <option value="janurary">July</option>
+                <option value="janurary">Augest</option>
+                <option value="janurary">Sep</option>
+                <option value="janurary">Oct</option>
+                <option value="janurary">Nov</option>
+                <option value="janurary">Dec</option>
+            </select>
+            <!-- <input type="text" id="month" name="Month" placeholder="Month"> -->
+            <label for="number">Income</label>
+            <input type="number" id="income" name="number" placeholder="Income">
+            <label for="exp">Expense</label>
+            <input type="number" id="expense" name="exp" placeholder="Expense">
+            <input type="submit" value="Save">
+        </form>
+    </div>
+    
+    <div id="container"></div>
+    <script>
+        document.querySelector('form').addEventListener("submit",click);
+        var expansesData= [];
+        function click(){
+            event.preventDefault();
+            var expanseTrackerObj = {
+                month: document.querySelector('#month').value,
+                income: document.querySelector("#income").value,
+                expense: document.querySelector("#expense").value,
+            };
+            localStorage.setItem('myExpanse', JSON.stringify(expanseTrackerObj));
+            
+           expansesData.push(expanseTrackerObj);
+           displayData(expansesData);
+        }
+        function displayData(Expanses){
+            document.querySelector("#container").innerText = "";
+                Expanses.forEach(function(exp){
+
+                    var box = document.createElement('div');
+                    var month = document.createElement("h2");
+                    month.innerText = exp.month;
+
+                     var income = document.createElement("p");
+                    income.innerText = "Your income is Rs" + exp.income;
+
+                    var expanse = document.createElement("p");
+                    expanse.innerText =  "Your expense is Rs" + exp.expense;
+
+                    var savings = document.createElement("p");
+                    savings.innerText = "Your savings is Rs" + (exp.income - exp.expense);
+
+                    box.append(month,income,expanse,savings);
+
+                    // localStorage.setItem('myExpanse', JSON.stringify(exp))
+                    document.querySelector("#container").append(box);
+
+                });
+
+        }
+    </script>
+</body>
+</html>
